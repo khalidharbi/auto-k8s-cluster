@@ -1,0 +1,46 @@
+- name: Creating the cluster
+  block:
+
+    - name: Initialize K8S cluster
+      ansible.builtin.command: 
+        sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address={{ ansible_host }}
+      register: kubeadm_init
+      changed_when: true
+
+    - name: Grant kubectl access to ubuntu user
+      ansible.builtin.shell: |
+        cd
+        mkdir -p $HOME/.kube
+        sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+        sudo chown $(id -u):$(id -g) $HOME/.kube/config
+        echo "alias k=kubectl" >> .bashrc
+      changed_when: kubeadm_init.rc == 0
+
+    - name: Install Pod network
+      ansible.builtin.shell: |
+        kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+        sleep 30
+      args:
+        creates: pod_network_setup.txt
+      changed_when: kubeadm_init.rc == 0
+
+
+- name: Create cluster joining script
+  ansible.builtin.shell: |
+    sudo kubeadm token create --print-join-command > /tmp/join_cluster.sh
+    sudo chmod a+x /tmp/join_cluster.sh
+  changed_when: true
+
+- name: Add sudo at the beginning of the kubeadm join command
+  ansible.builtin.replace:
+    path: /tmp/join_cluster.sh
+    regexp: '^(\s*)(kubeadm join .*)'
+    replace: '\1sudo \2'
+
+- name: Fetch cluster joining script
+  ansible.builtin.fetch:
+    src: /tmp/join_cluster.sh
+    dest: join_cluster.sh
+    flat: true
+
+

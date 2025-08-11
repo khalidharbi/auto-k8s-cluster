@@ -1,0 +1,29 @@
+- name: Disable SELinux
+  ansible.builtin.shell: sudo setenforce 0
+
+- name: Disable Firewalld
+  service:
+    name: firewalld
+    state: stopped 
+    enabled: false
+
+- name: Change SELinux conf
+  ansible.builtin.command: sudo sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/sysconfig/selinux
+
+- name: Disable swap
+  ansible.builtin.shell: |
+    sudo swapoff -a
+    sudo sed -i '/ swap / s/^\(.*\)$/#\l/g' /etc/fstab
+
+- name: Install deps
+  ansible.builtin.yum:
+    name:
+      - yum-utils
+      - device-mapper-persistent-data
+      - lvm2
+      - curl
+      - gnupg
+      - net-tools
+      - ca-certificates
+    state: present
+

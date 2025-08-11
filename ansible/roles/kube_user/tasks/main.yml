@@ -1,0 +1,32 @@
+- name: Load sen vars
+  ansible.builtin.include_vars: ../vars/sen.yml
+
+- name: Load user vars
+  ansible.builtin.include_vars: ../vars/user.yml
+
+- name: hash pass
+  ansible.builtin.set_fact:
+    hashed_password: "{{ password | password_hash('sha512') }}"
+
+- name: create ansible user called "{{ user }}"
+  tags: always
+  ansible.builtin.user:
+    name: "{{ user }}"
+    password: "{{ hashed_password }}"
+
+- name: add ssh key for "{{ user }}"
+  tags: always
+  authorized_key:
+    user: "{{ user }}"
+    key: "{{ key }}"
+
+- name: add sudoers file for "{{ user }}" user
+  tags: always
+  ansible.builtin.copy:
+    src: sudoer_ansible
+    dest: /etc/sudoers.d/{{ user }}
+    owner: root
+    group: root
+    mode: 0440
+
+

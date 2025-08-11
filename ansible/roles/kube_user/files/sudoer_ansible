@@ -1,0 +1,1 @@
+kube ALL=(ALL) NOPASSWD: ALL

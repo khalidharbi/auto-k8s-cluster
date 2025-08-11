@@ -1,0 +1,16 @@
+control_ports:
+  - 6443/tcp
+  - 2379/tcp
+  - 2380/tcp
+  - 10250/tcp
+  - 10251/tcp
+  - 10259/tcp
+  - 10257/tcp
+  - 179/tcp
+  - 4789/udp
+
+worker_ports:
+  - 179/tcp
+  - 10250/tcp
+  - 30000-32767/tcp
+  - 4789/udp

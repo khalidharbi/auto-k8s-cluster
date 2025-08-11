@@ -1,0 +1,4 @@
+- name: Copy hosts file to cluster nodes
+  ansible.builtin.template:
+    src: hosts.j2
+    dest: /etc/hosts 

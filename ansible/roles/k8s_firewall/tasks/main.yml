@@ -1,0 +1,24 @@
+- name: Ensure firewalld is installed and running
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Open worker-plane-only ports
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  loop: "{{ worker_ports }}"
+  when: "'workers' in group_names"
+
+- name: Open control-plane-only ports 
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  loop: "{{ control_ports }}"
+  when: "'controls' in group_names"
+

@@ -1,0 +1,41 @@
+- name: create kube user
+  hosts: all
+  roles:
+    - kube_user
+
+- name: Common setup 
+  hosts: all
+  roles:
+    - common_set_up
+
+- name: Edit hosts file
+  hosts: all
+  roles:
+    - hosts
+
+- name: Kernel conf
+  hosts: all
+  roles:
+    - kernel
+
+- name: Install containerd
+  hosts: all
+  roles:
+    - containerd
+
+- name: Install kube tools
+  hosts: all
+  roles:
+    - k8s_tools
+
+- name: Initialise k8s control node
+  hosts: controls
+  become_user: kube
+  roles:
+    - k8s_control
+
+- name: Join worker nodes to k8s cluster
+  hosts: workers 
+  become_user: kube 
+  roles:
+    - k8s_worker
