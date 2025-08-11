@@ -12,8 +12,8 @@ You can spin up a ready-to-use Kubernetes environment in minutes — ideal for l
 
 Make sure you have the following installed on your host machine (Fedora in my case):
 
-```bash
 Run the follwing:
+```bash
 sudo dnf install -y @virtualization libvirt vagrant vagrant-libvirt vagrant-sshfs vagrant-hostmanager ansible git ruby-devel
 vagrant plugin install vagrant-libvirt
 vagrant plugin install vagrant-hostmanager
@@ -21,6 +21,7 @@ pip3 install passlib
 sudo systemctl enable --now libvirtd
 export LIBVIRT_DEFAULT_URI=qemu:///system 
 virsh --connect qemu:///system net-list --all
+```
 
 ## Usage
 
@@ -29,6 +30,7 @@ virsh --connect qemu:///system net-list --all
 ```bash
 git clone https://github.com/khalidharbi/auto-k8s-cluster.git
 cd auto-k8s-cluster
+```
 
 2. Configure VM
 Edit the Vagrantfile to set:
@@ -41,6 +43,7 @@ Edit the Vagrantfile to set:
 
 ```bash
 vagrant up
+```
 
 4. Run Ansible Playbooks
 
@@ -49,10 +52,12 @@ vagrant up
 ansible-vault encrypt vars/sen.yml
 when you use ansible-vault it will prombt you for a password
 then add ur public ssh key and password for the kube user
+```
 
 ```yaml
 key: "YOUR KEY"
 password: "YOUR PASSWORD"
+```
 
 now you can run this
 ```bash
