@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
 
     node.vm.provision "shell", inline: <<-SHELL
       mkdir -p /home/vagrant/.ssh
-      echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ19P5Ed5Ch2CKCsE0mcFXeLGp8jjPDG3b5UrNlZmUbv khalid@fedora' >> /home/vagrant/.ssh/authorized_keys
+      echo 'ADD YOUR SSH KEY HERE' >> /home/vagrant/.ssh/authorized_keys 
       chmod 600 /home/vagrant/.ssh/authorized_keys
       chown -R vagrant:vagrant /home/vagrant/.ssh
     SHELL
@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
 
       node.vm.provision "shell", inline: <<-SHELL
         mkdir -p /home/vagrant/.ssh
-        echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ19P5Ed5Ch2CKCsE0mcFXeLGp8jjPDG3b5UrNlZmUbv khalid@fedora' >> /home/vagrant/.ssh/authorized_keys
+        echo 'ADD YOUR SSH KEY HERE' >> /home/vagrant/.ssh/authorized_keys
         chmod 600 /home/vagrant/.ssh/authorized_keys
         chown -R vagrant:vagrant /home/vagrant/.ssh
       SHELL
