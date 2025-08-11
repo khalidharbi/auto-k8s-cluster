@@ -80,3 +80,4 @@ su - kube
 kubectl get nodes
 ```
 you should see all the nodes ready
+![Alt text](images/k-get-nodes.png]
