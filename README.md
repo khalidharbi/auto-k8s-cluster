@@ -76,6 +76,7 @@ kubectl get nodes
 or use the vagrant user
 ```bash
 ssh vagrant@"YOUR CONTROL NODE IP"
+su - kube
 kubectl get nodes
 ```
 you should see all the nodes ready
