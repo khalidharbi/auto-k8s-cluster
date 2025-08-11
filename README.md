@@ -53,8 +53,8 @@ cd ~/auto-k8s-cluster/ansible
 rm roles/kube_user/vars/sen.yml
 ansible-vault encrypt vars/sen.yml
 ```
-when you use ansible-vault it will prombt you for a password
-then add ur public ssh key and password for the kube user. make sure to use **key** and **password** variable.
+when you use ansible-vault it will prombt you for a password,
+then add your public ssh key and password for the kube user. make sure to use **key** and **password** variable.
 
 ```yaml
 key: "YOUR KEY"
