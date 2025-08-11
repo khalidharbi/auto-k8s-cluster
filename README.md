@@ -60,10 +60,10 @@ then add your public ssh key and password for the kube user. make sure to use **
 key: "YOUR KEY"
 password: "YOUR PASSWORD"
 ```
-
-now you can run this
+put your vault password in a file.
+now you can run this, make sure your in the ansible dir.
 ```bash
-ansible-playbook -u vagrant --ask-vault-pass="your vault password" k8s_cluster.yml
+ansible-playbook -u vagrant --vault-pass-file="path-to-your-vault-pass-file" k8s_cluster.yml
 ```
 the **k8s_cluster.yml** playbook will create kube user, prepare the nodes, init kubernetes on control node, and join the worker node to the cluster.
 
